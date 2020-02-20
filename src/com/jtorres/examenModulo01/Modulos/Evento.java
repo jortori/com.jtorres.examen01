@@ -10,11 +10,12 @@ public class Evento {
     public Evento() {
     }
 
-    public Evento(String nombre, String ubicacion, int capacidad, int idEvento) {
+    public Evento(int idEvento, String nombre, String ubicacion, int capacidad) {
+        this.idEvento = idEvento;
         this.nombre = nombre;
         this.Ubicacion = ubicacion;
         this.capacidad = capacidad;
-        this.idEvento = idEvento;
+
     }
 
     public String getNombre() {

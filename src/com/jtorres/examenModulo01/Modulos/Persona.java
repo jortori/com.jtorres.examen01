@@ -4,19 +4,21 @@ import java.util.Objects;
 
 public class Persona {
 
+    private int IdPersona;
     private String nombre;
     private char genero;
     private int edad;
-    private int IdPersona;
+
 
     public Persona() {
     }
 
-    public Persona(String nombre, char genero, int edad, int idPersona) {
+    public Persona(int idPersona, String nombre, char genero, int edad) {
+        this.IdPersona = idPersona;
         this.nombre = nombre;
         this.genero = genero;
         this.edad = edad;
-        this.IdPersona = idPersona;
+
     }
 
     public String getNombre() {
@@ -43,13 +45,14 @@ public class Persona {
         this.edad = edad;
     }
 
+    public void setIdPersona(int idPersona) {
+        IdPersona = idPersona;
+    }
     public int getIdPersona() {
         return IdPersona;
     }
 
-    public void setIdPersona(int idPersona) {
-        IdPersona = idPersona;
-    }
+
 
     @Override
     public boolean equals(Object o) {

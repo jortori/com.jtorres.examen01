@@ -17,7 +17,7 @@ public class Eventos implements Gestionar {
         Evento evento = new Evento();
         String nombre  = JOptionPane.showInputDialog("Ingrese el nombre del evento no mas de 100 caracteres");
         while(nombre.length()>100) {
-            System.out.println("Nombre demasiado largo");
+            System.out.println("El Nombre del evento es demasiado largo");
             JOptionPane.showMessageDialog(null, "Nombre demasiado largo");
             nombre = JOptionPane.showInputDialog("Ingrese el nombre del evento no mas de 100 caracteres");
         }
@@ -46,11 +46,11 @@ public class Eventos implements Gestionar {
             }
         }
         evento.setCapacidad(capacidad);
-        JOptionPane.showMessageDialog(null, "El elemento " + evento.getNombre() + " ha sido ingresado correctamente ");
+        JOptionPane.showMessageDialog(null, "El Evento " + evento.getNombre() + " ha sido ingresado correctamente ");
 
         java.sql.Connection con = Conexion.getInstance().getConnection();
         Statement statement = con.createStatement();
-        statement.executeUpdate("INSERT INTO REGISTROSDB.EVENTOS (NOMBRE, UBICACION, CAPACIDAD) VALUES ("
+        statement.executeUpdate("INSERT INTO REGISTROSDB.EVENTO (NOMBRE, UBICACION, CAPACIDAD) VALUES ("
                 + "'" + evento.getNombre() + "','" + evento.getUbicacion() + "'," + evento.getCapacidad() + ")");
         statement.close();
         con.close();
@@ -59,14 +59,14 @@ public class Eventos implements Gestionar {
     @Override
     public void mostrar() throws Exception{
         java.sql.Connection con = Conexion.getInstance().getConnection();                       //Instancia la conexion a la base
-        String sql = "SELECT ID_EVENTOS, NOMBRE, UBICACION, CAPACIDAD FROM REGISTROSDB.EVENTOS";//Hace la consulta de todos los miembros
+        String sql = "SELECT ID_EVENTO, NOMBRE, UBICACION, CAPACIDAD FROM REGISTROSDB.EVENTO";//Hace la consulta de todos los miembros
         Statement statement = con.createStatement();                                            //Crea la sentencia
         ResultSet resultSet = statement.executeQuery(sql);                                      //Ejecuto la sentencia y espero un query
         //**********************************************************************************************************************************
         //Creo la tabla
         DefaultTableModel modelo = new DefaultTableModel();                                     //Genero una tabla para almacenar los datos
         JTable tabla = new JTable(modelo);                                                      //Formateo la tabla para mostrar
-        modelo.addColumn("ID_EVENTOS");                                            //Formateo los encabezados de la tabla
+        modelo.addColumn("ID_EVENTO");                                            //Formateo los encabezados de la tabla
         modelo.addColumn("NOMBRE");
         modelo.addColumn("UBICACION");
         modelo.addColumn("CAPACIDAD");
@@ -134,8 +134,8 @@ public class Eventos implements Gestionar {
                 JOptionPane.showMessageDialog(null, "Por favor ingrese una capacidad para el evento valida");
             }
         }
-        statement.executeUpdate("UPDATE REGISTROSDB.EVENTOS SET NOMBRE = '" + nombre + "' , UBICACION = '"
-                + ubicacion + "', CAPACIDAD = " + capacidad + " WHERE ID_EVENTOS = " + identificador);
+        statement.executeUpdate("UPDATE REGISTROSDB.EVENTO SET NOMBRE = '" + nombre + "' , UBICACION = '"
+                + ubicacion + "', CAPACIDAD = " + capacidad + " WHERE ID_EVENTO = " + identificador);
         JOptionPane.showMessageDialog(null, "Registro actualizado con exito");
         return true;
     }
@@ -144,7 +144,7 @@ public class Eventos implements Gestionar {
     public boolean eliminar(String identificador) throws Exception{
         java.sql.Connection con = Conexion.getInstance().getConnection();                                                                   //Instancia la conexion a la baseo
         Statement statement = con.createStatement();
-        statement.executeUpdate("DELETE FROM REGISTROSDB.EVENTOS WHERE ID_EVENTOS = " + identificador);
+        statement.executeUpdate("DELETE FROM REGISTROSDB.EVENTO WHERE ID_EVENTO = " + identificador);
         JOptionPane.showMessageDialog(null, "Registro borrado con exito");                                    //Se muestra el dialogo
         statement.close();
         con.close();
@@ -154,13 +154,13 @@ public class Eventos implements Gestionar {
     @Override
     public void buscar(String identificador) throws Exception {
         java.sql.Connection con = Conexion.getInstance().getConnection();                       //Instancia la conexion a la base
-        String sql = "SELECT ID_EVENTOS, NOMBRE, UBICACION, CAPACIDAD FROM REGISTROSDB.EVENTOS WHERE ID_EVENTOS = "
+        String sql = "SELECT ID_EVENTO, NOMBRE, UBICACION, CAPACIDAD FROM REGISTROSDB.EVENTO WHERE ID_EVENTO = "
                 + "'" + identificador+"'";                                                      //Hace la consulta de todos los miembros
         Statement statement = con.createStatement();                                            //Crea la sentencia
         ResultSet resultSet = statement.executeQuery(sql);                                      //Ejecuto la sentencia y espero un query
         DefaultTableModel modelo = new DefaultTableModel();                                     //Genero una tabla para almacenar los datos
         JTable tabla = new JTable(modelo);                                                      //Formateo la tabla para mostrar
-        modelo.addColumn("ID_EVENTOS");                                            //Formateo los encabezados de la tabla
+        modelo.addColumn("ID_EVENTO");                                            //Formateo los encabezados de la tabla
         modelo.addColumn("NOMBRE");
         modelo.addColumn("UBICACION");
         modelo.addColumn("CAPACIDAD");

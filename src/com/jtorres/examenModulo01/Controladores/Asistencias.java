@@ -30,7 +30,7 @@ public class Asistencias  implements Gestionar {
         int ID_Persona = parseInt(JOptionPane.showInputDialog("Ingrese el ID de la persona que desea registrar"));
         java.sql.Connection con = Conexion.getInstance().getConnection();                                                   //Instancia la conexion a la base
         Statement statement = con.createStatement();
-        statement.executeUpdate("INSERT INTO REGISTROSDB.ASISTENCIAS (ID_PERSONA, ID_EVENTOS) VALUES ("
+        statement.executeUpdate("INSERT INTO REGISTROSDB.ASISTENCIA (ID_PERSONA, ID_EVENTO) VALUES ("
                 + "'" + ID_Persona + "','" + ID_Evento + "')");
         statement.close();
         con.close();
@@ -40,8 +40,10 @@ public class Asistencias  implements Gestionar {
     @Override
     public void mostrar() throws Exception{
         java.sql.Connection con = Conexion.getInstance().getConnection();                       //Instancia la conexion a la base
-        String sql = "SELECT A.ID_ASISTENCIA, A.ID_PERSONA, B.NOMBRE, A.ID_EVENTOS, C.NOMBRE, C.UBICACION FROM REGISTROSDB.ASISTENCIAS A " +
-                "JOIN REGISTROSDB.PERSONA B ON A.ID_PERSONA = B.ID_PERSONA JOIN REGISTROSDB.EVENTOS C ON A.ID_EVENTOS = C.ID_EVENTOS";
+        String sql = "SELECT A.ID_ASISTENCIA, A.ID_PERSONA, B.NOMBRE, A.ID_EVENTO, C.NOMBRE, C.UBICACION " +
+                "FROM REGISTROSDB.ASISTENCIA A " +
+                "JOIN REGISTROSDB.PERSONA B ON A.ID_PERSONA = B.ID_PERSONA JOIN REGISTROSDB.EVENTO C ON " +
+                "A.ID_EVENTO = C.ID_EVENTO";
         Statement statement = con.createStatement();                                            //Crea la sentencia
         ResultSet resultSet = statement.executeQuery(sql);                                      //Ejecuto la sentencia y espero un query
         DefaultTableModel modelo = new DefaultTableModel();                                     //Genero una tabla para almacenar los datos
@@ -49,7 +51,7 @@ public class Asistencias  implements Gestionar {
         modelo.addColumn("ID_ASISTENCIA");                                            //Formateo los encabezados de la tabla
         modelo.addColumn("ID_PERSONA");
         modelo.addColumn("NOMBRE PERSONA");
-        modelo.addColumn("ID_EVENTOS");
+        modelo.addColumn("ID_EVENTO");
         modelo.addColumn("NOMBRE EVENTO");
         modelo.addColumn("UBICACION");
 
@@ -80,7 +82,7 @@ public class Asistencias  implements Gestionar {
         frame.getContentPane().add(panel);
         frame.pack();
         frame.setVisible(true);                                                                  //Se muestra la tabla en pantalla
-        JOptionPane.showMessageDialog(null, "Asistencias registradas");    //Se muestra el dialogo
+        JOptionPane.showMessageDialog(null, "Asistencias Registradas");    //Se muestra el dialogo
         frame.setVisible(false);                                                                //Se oculta la tabla en pantalla
     }
 
@@ -90,9 +92,9 @@ public class Asistencias  implements Gestionar {
         int ID_Persona = parseInt(JOptionPane.showInputDialog("Ingrese el ID de la persona que desea modificar"));
         java.sql.Connection con = Conexion.getInstance().getConnection();                                                                   //Instancia la conexion a la base
         Statement statement = con.createStatement();
-        statement.executeUpdate("UPDATE REGISTROSDB.ASISTENCIAS SET ID_EVENTOS = '" + ID_Evento + "' , ID_PERSONA = '"
+        statement.executeUpdate("UPDATE REGISTROSDB.ASISTENCIA SET ID_EVENTO = '" + ID_Evento + "' , ID_PERSONA = '"
                 + ID_Persona + "' WHERE ID_ASISTENCIA = " + identificador);
-        JOptionPane.showMessageDialog(null, "Registro actualizado con exito");                                          //Se muestra el dialogo
+        JOptionPane.showMessageDialog(null, "Registros actualizados correctamente");                                          //Se muestra el dialogo
         return true;
     }
 
@@ -100,8 +102,8 @@ public class Asistencias  implements Gestionar {
     public boolean eliminar(String identificador) throws Exception{
         java.sql.Connection con = Conexion.getInstance().getConnection();                                                                   //Instancia la conexion a la baseo
         Statement statement = con.createStatement();
-        statement.executeUpdate("DELETE FROM REGISTROSDB.ASISTENCIAS WHERE ID_ASISTENCIA = " + identificador);
-        JOptionPane.showMessageDialog(null, "Registro borrado con exito");                                    //Se muestra el dialogo
+        statement.executeUpdate("DELETE FROM REGISTROSDB.ASISTENCIA WHERE ID_ASISTENCIA = " + identificador);
+        JOptionPane.showMessageDialog(null, "Registro borrado correctamente");                                    //Se muestra el dialogo
         statement.close();
         con.close();
         return true;
@@ -111,8 +113,10 @@ public class Asistencias  implements Gestionar {
     public void buscar(String identificador) throws Exception {
         java.sql.Connection con = Conexion.getInstance().getConnection();                       //Instancia la conexion a la base
         Statement statement = con.createStatement();
-        String sql = "SELECT A.ID_ASISTENCIA, A.ID_PERSONA, B.NOMBRE, A.ID_EVENTOS, C.NOMBRE, C.UBICACION FROM REGISTROSDB.ASISTENCIAS A " +
-                "JOIN REGISTROSDB.PERSONA B ON A.ID_PERSONA = B.ID_PERSONA JOIN REGISTROSDB.EVENTOS C ON A.ID_EVENTOS = C.ID_EVENTOS" +
+        String sql = "SELECT A.ID_ASISTENCIA, A.ID_PERSONA, B.NOMBRE, A.ID_EVENTO, C.NOMBRE, C.UBICACION " +
+                "FROM REGISTROSDB.ASISTENCIA A " +
+                "JOIN REGISTROSDB.PERSONA B ON A.ID_PERSONA = B.ID_PERSONA JOIN REGISTROSDB.EVENTO C ON " +
+                "A.ID_EVENTO = C.ID_EVENTO" +
                 " WHERE ID_ASISTENCIA = " + "'" + identificador+"'";                                                      //Hace la consulta de todos los miembros
         ResultSet resultSet = statement.executeQuery(sql);                                      //Ejecuto la sentencia y espero un query
         DefaultTableModel modelo = new DefaultTableModel();                                     //Genero una tabla para almacenar los datos
@@ -120,7 +124,7 @@ public class Asistencias  implements Gestionar {
         modelo.addColumn("ID_ASISTENCIA");                                            //Formateo los encabezados de la tabla
         modelo.addColumn("ID_PERSONA");
         modelo.addColumn("NOMBRE PERSONA");
-        modelo.addColumn("ID_EVENTOS");
+        modelo.addColumn("ID_EVENTO");
         modelo.addColumn("NOMBRE EVENTO");
         modelo.addColumn("UBICACION");
 
@@ -152,7 +156,7 @@ public class Asistencias  implements Gestionar {
         frame.getContentPane().add(panel);
         frame.pack();
         frame.setVisible(true);                                                                  //Se muestra la tabla en pantalla
-        JOptionPane.showMessageDialog(null, "Asistencias registradas");    //Se muestra el dialogo
+        JOptionPane.showMessageDialog(null, "Asistencias Registradas");    //Se muestra el dialogo
         frame.setVisible(false);
 
     }

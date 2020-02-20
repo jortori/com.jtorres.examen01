@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import javax.swing.JScrollPane;
 
 public class Personas implements Gestionar {
-    //Declaro que para la clase persona se espera crear un arraylsit aun no definido.
+
     private final ArrayList<Persona> personas;
 
     //Genero el constructor de la variable de tipo Arraylist previamente creada
@@ -48,7 +48,8 @@ public class Personas implements Gestionar {
             }
         }
         persona.setEdad(edad);
-        JOptionPane.showMessageDialog(null, "El elemento " + persona.getNombre() + " ha sido ingresado correctamente ");
+        JOptionPane.showMessageDialog(null, "Los datos de " + persona.getNombre() +
+                " han sido ingresado correctamente");
         java.sql.Connection con = Conexion.getInstance().getConnection();
         Statement statement = con.createStatement();
         statement.executeUpdate("INSERT INTO REGISTROSDB.PERSONA (NOMBRE, GENERO, EDAD) VALUES ("
@@ -62,7 +63,7 @@ public class Personas implements Gestionar {
     @Override
     public void mostrar() throws Exception {
         java.sql.Connection con = Conexion.getInstance().getConnection();                   //Instancia la conexion a la base
-        String sql = "SELECT ID_PERSONA, NOMBRE, EDAD, GENERO FROM REGISTROSDB.PERSONA";    //Hace la consulta de todos los miembros
+        String sql = "SELECT ID_PERSONA, NOMBRE, GENERO, EDAD FROM REGISTROSDB.PERSONA";    //Hace la consulta de todos los miembros
         Statement statement = con.createStatement();                                        //Crea la sentencia
         ResultSet resultSet = statement.executeQuery(sql);                                   //Ejecuto la sentencia y espero un query
         DefaultTableModel modelo = new DefaultTableModel();                                     //Genero una tabla para almacenar los datos
@@ -76,14 +77,14 @@ public class Personas implements Gestionar {
             Persona persona = new Persona();                                                //Genero un arraylist persona momentaneo
             persona.setIdPersona(resultSet.getInt("ID_PERSONA"));               //Voy extrayendo los datos de la consulta
             persona.setNombre(resultSet.getString("NOMBRE"));
-            persona.setEdad(resultSet.getInt("EDAD"));
             persona.setGenero(resultSet.getString("GENERO").charAt(0));
+            persona.setEdad(resultSet.getInt("EDAD"));
             personas.add(persona);
-            Object[] fila = new Object[4]; // Hay tres columnas en la tabla                //defino como se va ir llenando la tabla
+            Object[] fila = new Object[4]; // Hay cuatro columnas en la tabla                //defino como se va ir llenando la tabla
             fila[0] = (resultSet.getInt(1));                                //En la primer posición traigo el ID
             fila[1] = (resultSet.getString(2));                             //En la segunda posición traigo el nombre
-            fila[2] = (resultSet.getInt(3));                                //En la tercera posicion traigo la edad
-            fila[3] = (resultSet.getString(4).charAt(0));                   //En la cuarta posicion traigo el genero
+            fila[2] = (resultSet.getString(3).charAt(0));                   //En la cuarta posicion traigo el genero
+            fila[3] = (resultSet.getInt(4));                                //En la tercera posicion traigo la edad
 
             for (int i = 0; i < resultSet.getFetchSize(); i++)
                 fila[i] = resultSet.getObject(i + 1);                             //Se hace el barrido del resultset
@@ -104,7 +105,7 @@ public class Personas implements Gestionar {
         frame.getContentPane().add(panel);
         frame.pack();
         frame.setVisible(true);                                                                  //Se muestra la tabla en pantalla
-        JOptionPane.showMessageDialog(null, "Personas ingresados");    //Se muestra el dialogo
+        JOptionPane.showMessageDialog(null, "Personas ingresadas");    //Se muestra el dialogo
         frame.setVisible(false);                                                                 //Se oculta la tabla en pantalla
     }
 
@@ -138,7 +139,7 @@ public class Personas implements Gestionar {
         }
         statement.executeUpdate("UPDATE REGISTROSDB.PERSONA SET NOMBRE = '" + Nombre + "' , GENERO = '"
                 + scan + "', EDAD = " + edad + " WHERE ID_PERSONA = " + identificador);
-        JOptionPane.showMessageDialog(null, "Registro actualizado con exito");                                          //Se muestra el dialogo
+        JOptionPane.showMessageDialog(null, "El Registro de " + Nombre + " se ha actualizado correctamente");                                          //Se muestra el dialogo
         return true;
     }
 
@@ -147,7 +148,7 @@ public class Personas implements Gestionar {
         java.sql.Connection con = Conexion.getInstance().getConnection();                                                                   //Instancia la conexion a la baseo
         Statement statement = con.createStatement();
         statement.executeUpdate("DELETE FROM REGISTROSDB.PERSONA WHERE ID_PERSONA = " + identificador);
-        JOptionPane.showMessageDialog(null, "Registro borrado con exito");                                    //Se muestra el dialogo
+        JOptionPane.showMessageDialog(null, "Registro borrado correctamente");                                    //Se muestra el dialogo
         statement.close();
         con.close();
         return true;
@@ -156,7 +157,7 @@ public class Personas implements Gestionar {
     @Override
     public void buscar(String identificador) throws Exception {
         java.sql.Connection con = Conexion.getInstance().getConnection();                                                               //Instancia la conexion a la base
-        String sql = "SELECT ID_PERSONA, NOMBRE, EDAD, GENERO FROM REGISTROSDB.PERSONA WHERE ID_PERSONA = " + "'"+identificador+"'";    //Hace la consulta de todos los miembros y concatena con el ID seleccionado
+        String sql = "SELECT ID_PERSONA, NOMBRE, GENERO, EDAD FROM REGISTROSDB.PERSONA WHERE ID_PERSONA = " + "'"+identificador+"'";    //Hace la consulta de todos los miembros y concatena con el ID seleccionado
         Statement statement = con.createStatement();                                                                                    //Crea la sentencia
         DefaultTableModel modelo = new DefaultTableModel();                                                                             //Genero una tabla para almacenar los datos
         JTable tabla = new JTable(modelo);                                                                                              //Formateo la tabla para mostrar
@@ -169,8 +170,8 @@ public class Personas implements Gestionar {
             Object[] fila = new Object[4]; // Hay tres columnas en la tabla                     //defino como se va ir llenando la tabla
             fila[0] = (resultSet.getInt(1));                                        //En la primer posición traigo el ID
             fila[1] = (resultSet.getString(2));                                     //En la segunda posición traigo el nombre
-            fila[2] = (resultSet.getInt(3));                                        //En la tercera posicion traigo la edad
-            fila[3] = (resultSet.getString(4).charAt(0));                           //En la cuarta posicion traigo el genero
+            fila[2] = (resultSet.getString(3).charAt(0));                           //En la cuarta posicion traigo el genero
+            fila[3] = (resultSet.getInt(4));                                        //En la tercera posicion traigo la edad
 
             for (int i = 0; i < resultSet.getFetchSize(); i++)
                 fila[i] = resultSet.getObject(i + 1);                               //Se hace el barrido del resultset
@@ -191,7 +192,7 @@ public class Personas implements Gestionar {
         frame.getContentPane().add(panel);
         frame.pack();
         frame.setVisible(true);                                                                  //Se muestra la tabla en pantalla
-        JOptionPane.showMessageDialog(null, "Personas encontradas");    //Se muestra el dialogo
+        JOptionPane.showMessageDialog(null, "Persona encontrada");    //Se muestra el dialogo
         frame.setVisible(false);                                                                 //Se oculta la tabla en pantalla
     }
 
