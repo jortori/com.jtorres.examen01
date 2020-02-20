@@ -2,6 +2,7 @@ package com.jtorres.examenModulo01.Modulos;
 
 public class Evento {
 
+    int idEvento;
     String nombre;
     String Ubicacion;
     int capacidad;
@@ -9,10 +10,11 @@ public class Evento {
     public Evento() {
     }
 
-    public Evento(String nombre, String ubicacion, int capacidad) {
+    public Evento(String nombre, String ubicacion, int capacidad, int idEvento) {
         this.nombre = nombre;
         this.Ubicacion = ubicacion;
         this.capacidad = capacidad;
+        this.idEvento = idEvento;
     }
 
     public String getNombre() {
@@ -39,6 +41,14 @@ public class Evento {
         this.capacidad = capacidad;
     }
 
+    public int getIdEvento() {
+        return idEvento;
+    }
+
+    public void setIdEvento(int idEvento) {
+        this.idEvento = idEvento;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,6 +56,7 @@ public class Evento {
 
         Evento evento = (Evento) o;
 
+        if (idEvento != evento.idEvento) return false;
         if (capacidad != evento.capacidad) return false;
         if (!nombre.equals(evento.nombre)) return false;
         return Ubicacion.equals(evento.Ubicacion);
@@ -53,18 +64,10 @@ public class Evento {
 
     @Override
     public int hashCode() {
-        int result = nombre.hashCode();
+        int result = idEvento;
+        result = 31 * result + nombre.hashCode();
         result = 31 * result + Ubicacion.hashCode();
         result = 31 * result + capacidad;
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Evento{" +
-                "nombre='" + nombre + '\'' +
-                ", Ubicacion='" + Ubicacion + '\'' +
-                ", capacidad=" + capacidad +
-                '}';
     }
 }

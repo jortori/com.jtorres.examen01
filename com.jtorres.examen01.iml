@@ -5,8 +5,37 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="13" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <ANNOTATIONS>
+          <root url="file://$USER_HOME$/Documents/MARIADB" />
+        </ANNOTATIONS>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Documents/MARIADB" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="file://$USER_HOME$/Documents/MARIADB" />
+        </JAVADOC>
+        <NATIVE>
+          <root url="file://$USER_HOME$/Documents/MARIADB" />
+        </NATIVE>
+        <SOURCES>
+          <root url="file://$USER_HOME$/Documents/MARIADB" />
+        </SOURCES>
+        <jarDirectory url="file://$USER_HOME$/Documents/MARIADB" recursive="false" />
+        <jarDirectory url="file://$USER_HOME$/Documents/MARIADB" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Documents/JAVA de descarga/Sesion 04 - JDBC and Databases/mariadb-java-client-2.5.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
-
